@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+void solve()
+{
+    string s;
+    cin >> s;
+    stack <char> st;
+    for (char x : s)
+    {
+        if (x == '(' || x == '[' || x == '{')
+        {
+            st.push(x);
+        }
+        else
+        {
+            if (st.empty())
+            {
+                cout << "Invalid!\n";
+                return;
+            }
+            else st.pop();
+        }
+    }
+    if (st.empty())
+    {
+        cout << "Valid!\n";
+    }
+    else cout << "Invalid!\n";
+}
+
+int main()
+{
+    int t; cin >> t;
+    while (t--)
+    {
+        solve();
+    }
+}

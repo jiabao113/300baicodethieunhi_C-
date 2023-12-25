@@ -1,0 +1,109 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+
+ListNode* twoMergedLists(ListNode* list1, ListNode* list2)
+{
+    // create a dummy
+    ListNode* dummy = new ListNode(0);
+    // create a pointer
+    ListNode* current = dummy;
+    // iterate until one of them becomes empty
+    while (list1 != NULL && list2 != NULL)
+    {
+        // compare and append
+        if (list1->val <= list2->val)
+        {
+            current->next = list1;
+            list1 = list1->next;
+        }
+        else 
+        {
+            current->next = list2;
+            list2 = list2->next;
+        }
+        current = current->next;
+    }
+    // append the remaining nodes 
+    if (list1 != NULL)
+    {
+        current->next = list1;
+    }
+    else 
+    {
+        current->next = list2;
+    }
+    
+    //Store the head of merged list
+    ListNode* mergedList = dummy->next;
+    
+    //delete dummy-
+    delete dummy;
+    
+    return mergedList;
+}
+
+int main()
+{
+    // create list1
+    ListNode* list1 = new ListNode(1);
+    list1->next = new ListNode(2);
+    list1->next->next = new ListNode(4);
+    
+    ListNode* list2 = new ListNode(1);
+    list2->next = new ListNode(3);
+    list2->next->next = new ListNode(4);
+    
+    //merge List
+    ListNode* mergedList = twoMergedLists(list1, list2);
+    
+    //print the list
+    ListNode* current = mergedList;
+    while(current != NULL)
+    {
+        cout << current->val << " ";
+        current = current->next;
+    }
+    cout << endl;
+    
+    //clean up the memory
+    delete list1;
+    delete list2;
+    
+    //delete merged list 
+    while (mergedList != NULL)
+    {
+        current = mergedList;
+        mergedList = mergedList->next;
+        delete current;
+    }
+    
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+
+using namespace std;
+
+vector<int> twoSum(vector<int>& nums, int target)
+{
+    // create a hashmap to store the complement
+    unordered_map<int, int> hashMap;
+    // iterate the array 
+    for (int i = 0; i < nums.size(); i++)
+    {
+        //calculate the complement
+        int complement = target - nums[i];
+        // check whether complement exists or not
+        if (hashMap.count(complement) > 0)
+        {
+            return {hashMap[complement], i};
+        }
+        hashMap[nums[i]] = i;
+    }
+    return {};
+}
+
+
+
+int main(){
+    vector <int> nums = {2, 7, 11, 15};
+    int target = 9;
+    
+    vector<int> result = twoSum(nums, target);
+    if (result.size() == 2) 
+    {
+        cout << "Indices: " << result[0] << ", " << result[1] << endl;
+    }
+    else 
+    {
+        cout << "No solution found!" << endl;
+    }
+}

@@ -1,1 +1,54 @@
+#include <iostream>
+#include <vector>
 
+using namespace std;
+
+void floodFillHelper(vector<vector<int>>& image, int sr, int sc, 
+                     int originalColor, int newColor) {
+    // Out of bounds
+    if (sr < 0 || sr >= image.size() || sc < 0 || sc >= image[0].size()) {
+        return;
+    }
+    
+    if (image[sr][sc] != originalColor || image[sr][sc] == newColor) {
+        return;
+    }
+    
+    // Corrected assignment from == to =
+    image[sr][sc] = newColor;
+    
+    // Recursively call for the 4 adjacent pixels
+    floodFillHelper(image, sr + 1, sc, originalColor, newColor); // Down
+    floodFillHelper(image, sr - 1, sc, originalColor, newColor); // Up
+    floodFillHelper(image, sr, sc + 1, originalColor, newColor); // Right
+    floodFillHelper(image, sr, sc - 1, originalColor, newColor); // Left
+}
+
+vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+    // Check for the empty image 
+    if (image.empty() || image[0].empty()) return image;
+    
+    int originalColor = image[sr][sc];
+    // Check if the new color is different from the original color
+    if (originalColor != color) {
+        floodFillHelper(image, sr, sc, originalColor, color);
+    }
+    
+    return image;
+}
+
+int main() {
+    vector<vector<int>> image = {{1, 1, 1}, {1, 1, 0}, {1, 0, 1}};
+    int sr = 1, sc = 1, color = 2;
+    vector<vector<int>> result = floodFill(image, sr, sc, color);
+
+    // Print result
+    for (const auto& row : result) {
+        for (int pixel : row) {
+            cout << pixel << " ";
+        }
+        cout << endl;
+    }
+    
+    return 0;
+}
